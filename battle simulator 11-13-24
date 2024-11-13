@@ -1,0 +1,81 @@
+#include<iostream>
+using namespace std;
+
+//function declartion
+void BattleSim();
+
+//global variable: can be seen and used by all functions
+int playerHealth = 100;
+
+int main() {
+	srand(time(NULL)); //seeds your random number generator
+	int room = 1;
+	char input;
+	while (playerHealth >0 ) { //game loop
+		switch (room) {
+		case 1:
+			cout << "youre in room 1, you can go (s)outh" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 2;
+			break;
+		case 2:
+			BattleSim();
+			cout << "youre in room 2, you can go (s)outh or (n)orth" << endl;
+				cin >> input;
+				if (input == 's')
+					room = 3;
+				else if (input == 'n')
+					room = 1;
+			break;
+		case 3:
+			cout << "youre in room 3, you can go (n)orth" << endl;
+			cin >> input;
+			if (input == 'n')
+				room = 2;
+			break;
+
+		}
+	}//end of game loop
+	if (playerHealth <= 0)
+		cout << "game over. (sad trumpet noise)" << endl;
+	else
+		cout << "congrats, you won" << endl;
+}//end  of main
+
+void BattleSim() {
+	int MonsterHealth = 20; //local variable: can only be seen and used by this function
+	int damage;
+	char dummy;
+	cout << endl << endl << "----------MONSTER BATTLE-----------" << endl;
+	cout << "an ogre attacks" << endl;
+	while (playerHealth > 0 && MonsterHealth > 0) {
+		//players attack
+		damage = rand() % 11+5; // number between 0 and 10
+		cout << "you hit the monster for " << damage<<" damage." << endl;
+		MonsterHealth -= damage;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+
+
+		//monster attack
+		damage = rand() % 21; // number between 0 and 20
+		cout << "the monster hits you for " << damage<< " damage." << endl;
+		playerHealth -= damage;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+
+		//printing health values
+		if (playerHealth > 0)
+			cout << "your health: " << playerHealth << endl;
+		else
+			cout << "you died" << endl;
+
+
+		cout << "your health: " << playerHealth << endl;
+		cout << "monster health:" << MonsterHealth << endl;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+	}//end of mini loop
+	cout << "----------------end of battle-----------------" << endl << endl;
+}
